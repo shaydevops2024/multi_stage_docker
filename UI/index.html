@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator App</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculator</h1>
+        <input type="text" id="num1" placeholder="Enter first number">
+        <input type="text" id="num2" placeholder="Enter second number">
+        <button onclick="calculate()">Calculate</button>
+        <button onclick="restart()">Restart</button>
+        <h2 id="result">Result: </h2>
+    </div>
+
+    <script>
+        async function calculate() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            if (isNaN(num1) || isNaN(num2)) return alert('Please enter valid numbers');
+
+            const res = await fetch('http://localhost:8000/calc', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ num1, num2 })
+            });
+            const data = await res.json();
+            document.getElementById('result').innerText = `Result: ${data.result}`;
+        }
+
+        function restart() {
+            document.getElementById('num1').value = '';
+            document.getElementById('num2').value = '';
+            document.getElementById('result').innerText = 'Result: ';
+        }
+
+        // Press Enter to calculate
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') calculate();
+        });
+    </script>
+</body>
+</html>
+
