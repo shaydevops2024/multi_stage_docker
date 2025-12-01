@@ -20,7 +20,8 @@ project/
 ├── UI/                     # Frontend service
 │   ├── Dockerfile          # Frontend Dockerfile
 │   ├── index.html          # Main HTML page
-│   ├── static/             # Static files
+│   └── static/
+│       └── styles.css      # Static files
 ├── docker-compose.yaml     # Docker Compose configuration
 └── README.md
 ```
